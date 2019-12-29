@@ -1,0 +1,14 @@
+{
+  "name": "Visual EQ Editor",
+  "short_name": "Editor",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./images/icon.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    }
+  ]
+}
