@@ -24,16 +24,21 @@ class Scene {
     events.createChannel("mouseover")
     events.createChannel("mousemove")
     events.createChannel("mousewheel")
+    events.createChannel("key")
 
     this.onMouseDown = this.onMouseDown.bind(this)
     this.onMouseUp = this.onMouseUp.bind(this)
     this.onMouseMove = this.onMouseMove.bind(this)
     this.onMouseWheel = this.onMouseWheel.bind(this)
+    this.onKeyDown = this.onKeyDown.bind(this)
+    this.onKeyUp = this.onKeyUp.bind(this)
 
     addEventListener("mousemove", this.onMouseMove)
     addEventListener("mousedown", this.onMouseDown)
     addEventListener("mouseup", this.onMouseUp)
     addEventListener("mousewheel", this.onMouseWheel)
+    addEventListener("keydown", this.onKeyDown)
+    addEventListener("keyup", this.onKeyUp)
   }
 
   get entitiesGroup () {
@@ -108,7 +113,9 @@ class Scene {
     events.broadcast("mousemove", message)
   }
 
-  onMouseDown ({target, clientX, clientY, button}) {
+  onMouseDown (event) {
+    event.preventDefault()
+    let {target, clientX, clientY, button} = event
     let message = {
       down: true,
       button,
@@ -124,7 +131,9 @@ class Scene {
     events.broadcast('mousebutton', message)
   }
 
-  onMouseUp ({target, clientX, clientY, button}) {
+  onMouseUp (event) {
+    event.preventDefault()
+    let {target, clientX, clientY, button} = event
     let message = {
       down: false,
       button,
@@ -139,11 +148,35 @@ class Scene {
     events.broadcast('mousebutton', message)
   }
 
-  onMouseWheel ({ wheelDeltaY }) {
+  onMouseWheel (event) {
+    event.preventDefault()
+    let { wheelDeltaY } = event
     let message = {
       down: wheelDeltaY < 0
     }
     events.broadcast('mousewheel', message)
+  }
+
+  onKeyDown (event) {
+    //event.preventDefault()
+    let { code, target } = event
+    let message = {
+      down: true,
+      code,
+      target
+    }
+    events.broadcast("key", message)
+  }
+
+  onKeyUp (event) {
+    //event.preventDefault()
+    let { code, target } = event
+    let message = {
+      down: false,
+      code,
+      target
+    }
+    events.broadcast("key", message)
   }
 
   findEntityByObject (object) {
