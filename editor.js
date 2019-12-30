@@ -4,7 +4,7 @@ const renderer = new Renderer()
 scene.renderer = renderer
 
 const camera = new Camera()
-camera.setPosition(25, 25, 25)
+camera.setPosition(45, 45, 45)
 camera.lookAt(0, 0, 0)
 scene.setCamera(camera)
 
